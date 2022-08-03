@@ -94,10 +94,10 @@ Here are the sample processed image files of each music genre and feature type:
 ![image](https://user-images.githubusercontent.com/57364511/182648113-3222068d-81fd-466c-9304-e59f89943e44.png)
 
 **Mel Spectrogram**
-![image](https://user-images.githubusercontent.com/57364511/182648197-5dc37d29-2460-4a68-bf62-b642aec0bbd1.png)
+![image](https://user-images.githubusercontent.com/57364511/182648163-0fb6659b-59ce-49b3-865e-481de05a5f52.png)
 
 **MFCC**
-![image](https://user-images.githubusercontent.com/57364511/182648163-0fb6659b-59ce-49b3-865e-481de05a5f52.png)
+![image](https://user-images.githubusercontent.com/57364511/182648197-5dc37d29-2460-4a68-bf62-b642aec0bbd1.png)
 
 # How to Run the Program
 
