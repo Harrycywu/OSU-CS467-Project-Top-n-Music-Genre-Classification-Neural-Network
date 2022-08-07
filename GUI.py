@@ -29,7 +29,7 @@ def select():
         go_image = tk.PhotoImage(file="Images/Go_Button.png")
         go_button.configure(image=go_image)
         go_button.image = go_image
-        
+
         # Show the name of the selected file
         file_name = file_path.split('/')[-1]
         entry1_text.set(file_name)
@@ -89,14 +89,14 @@ def go():
         probabilities.append(float("{:.2f}".format(res[1]*100)))
 
     # Show the figure result
-    fig = plt.figure()
+    fig = plt.figure(figsize=(6, 4), dpi=75)
     plt.barh(genres, probabilities)
     plt.title("Most Likely Music Genre")
     plt.xlabel('Probability(%)')
     for i, val in enumerate(probabilities):
         plt.text(val + 3, i, str(val)+'%', color = 'black', fontweight = 'bold')
     canvas = FigureCanvasTkAgg(fig, master=div1)
-    canvas.get_tk_widget().pack()
+    canvas.get_tk_widget().grid()
     plt.close()
 
     # Reset
@@ -116,7 +116,7 @@ def quit_message():
 window = tk.Tk()
 window.title("CS 467 Online Capstone Project")
 
-label1 = tk.Label(window, text = "Your Selected File: ", font=("Futura", 16))
+label1 = tk.Label(window, text = "Selected Audio File: ", font=("Futura", 16))
 label1.grid(row = 0, column = 0)
 
 entry1_text = tk.StringVar()

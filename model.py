@@ -13,7 +13,7 @@ class CNNModel(nn.Module):
         self.padding = padding
 
         # Batch Normalization: input_shape=(3, 256, 256)
-        # self.batchnorm = nn.BatchNorm2d(3)
+        self.batchnorm = nn.BatchNorm2d(3)
 
         # Convolution Layer 1
         self.cnn1 = nn.Conv2d(in_channels=3, out_channels=16, kernel_size=self.kernel_size, stride=self.stride, padding=self.padding)
@@ -38,20 +38,20 @@ class CNNModel(nn.Module):
 
         # Dense Layers
         # Fully Connected Layer 1
-        self.fc1 = nn.Linear(57600, 256)
+        self.fc1 = nn.Linear(57600, 128)
 
         # Fully Connected Layer 2
-        self.fc2 = nn.Linear(256, 128)
+        self.fc2 = nn.Linear(128, 64)
 
         # Fully Connected Layer 3
-        self.fc3 = nn.Linear(128, 10)
+        self.fc3 = nn.Linear(64, 10)
 
     def forward(self, x):
         # Batch Normalization
-        # output = self.batchnorm(x)
+        output = self.batchnorm(x)
 
         # Convolution Layer 1
-        output = self.act1(self.cnn1(x))
+        output = self.act1(self.cnn1(output))
         # Max Pooling 1
         output = self.maxpool1(output)
 
