@@ -30,7 +30,7 @@ Other software libraries:
 
 Please follow the file structure below:
 ```
-. 
+. OSU-CS467-Project-Top-n-Music-Genre-Classification-Neural-Network
 ├── Datasets
 │   ├── GTZAN
 │   │   ├── genres (10 music genre files with 100 audio files in each folder)
@@ -48,16 +48,16 @@ Please follow the file structure below:
 ├── Images
 ├── Results
 ├── Run_Scripts
-│   ├── run.sh
-│   ├── run_fea.sh
+│   ├── run.sh (the bash script to run the experiments with different batch sizes & learning rates)
+│   ├── run_fea.sh (the bash script to run the experiments with different features)
 ├── Train_Log
-├── Trained_Model
-├── data_overview.ipynb
-├── data_preprocess.py
-├── GUI.py
-├── model.py
-├── split_data.py
-└── train.py
+├── Trained_Model (the place to store the trained model if adding argument --save_model)
+├── data_overview.ipynb (the Jupyter Notebook with the exploration of data (GTZAN Genre Collection) & getting familiar with using Librosa)
+├── data_preprocess.py (used to preprocess the GTZAN raw audio data as the image data of different features)
+├── GUI.py (our main program)
+├── model.py (model architecture)
+├── split_data.py (used to split the data into sub-datasets like training, validation, and testing sets)
+└── train.py (used to train models with different settings)
 ```
 
 # Dataset
@@ -101,6 +101,27 @@ Here are the sample processed image files of each music genre and feature type:
 
 # How to Run the Program
 
+Follow the procedures described below:
+
+(1.) Git Clone this Repo & Set up the environment --> (2.) Download GTZAN data (saved as the file structure described above) --> (3.) Preprocess the raw GTZAN audio data --> (4.) Train the model with the provided parameters --> (5.) Run the GUI program
+
+--------------------
+
+**(1.) Git Clone this Repo & Set up the environment:**
+```
+$ git clone https://github.com/Harrycywu/OSU-CS467-Project-Top-n-Music-Genre-Classification-Neural-Network.git
+```
+
+**(2.) & (3.) Data download & Preprocessing:** Please refer to the "Data Download & Preprocessing" part above.
+
+**(4.) Train the model using the following command:**
+```
+$ python train.py --lr= --batch_size= --feature_type=mel_spectrogram --save_model
+```
+Note: This model has about xx% accuracy on the testing data.
+
+**(5.) Run the GUI program:**
+
 We use tkinter to develop a GUI that allows users to enter a song clip and receive a top-n list of this audio's most likely music genre. Run the **GUI.py** file as follows:
 ```
 $ python GUI.py
@@ -111,16 +132,53 @@ Then, follow the instructions on the GUI:
 
 ## How does the Program Work?
 
-We will first process the inputted audio file into the image file (e.g., MFCC), and then the trained CNN model will take this image file as input and predict the most likely music genre of this audio file.
-![image](https://user-images.githubusercontent.com/57364511/182657103-1be772fe-d78a-41e0-accf-ddb399997dc9.png)
+The program will first process the inputted audio file into the image file (e.g., MFCC or Mel Spectrogram). Then the trained CNN model will take this image file as input, predict the most likely music genre of this audio file, and finally show the prediction result.
+
+![image](https://user-images.githubusercontent.com/57364511/183298567-a0acab58-80da-41ca-b53f-b9e13f6d93d6.png)
 
 # How We Develop the CNN Model for Music Genre Classification Task
 
+**Implementation**
+
+First, we use Librosa and OpenCV to process the audio files. Second, we use PyTorch to build a framework that can train CNN models (used to predict a top-n list of inputted audio's most likely music genre) by using different settings, such as different batch sizes & learning rates. Here, we use Cross Entropy Loss since we are doing a classification task. Meanwhile, we use tqdm to keep track of the running progress of each part of the program (e.g., loading data & training progress).
+
+Using our developed framework, we can train CNN models with an accuracy of around 60~70% using the preprocessed GTZAN dataset. After getting the pre-trained model, our application allows users to select an audio file and receive a plot, created by matplotlib, showing a top-n list of this audio's most likely music genre predicted by the pre-trained CNN model.
+
 **Model Architecture**
+
+![image](https://user-images.githubusercontent.com/57364511/183299362-2005e345-2e4a-41ff-b4eb-b0d3282a9c84.png)
+
+The first layer of our model is Batch Normalization Layer, which standardizes the inputs to the network. The Batch Normalization Layer is followed by a three-layer CNN with ReLU and max-pooling, and the dimensions of inputs & outputs of each layer are developed based on research and tuning. We added a Dropout layer to prevent over-fitting and flattened the data to connect to the final fully connected layers (ReLU & Softmax).
 
 **Feature Selection**
 
+We ran the designed CNN model with different features by running the **run_fea.sh** (batch size=32 & learning rate=0.00001). And we find that the **Mel Spectrogram** outperforms other features. Thus, we choose to preprocess the raw GTZAN data as the Mel Spectrogram to be the input for our CNN model.
+
+The following are the loss & accuracy plots:
+
+***Wavelet***: Accuracy: ~27%
+
+![image](https://user-images.githubusercontent.com/57364511/183299908-adf60c41-4dd5-4e10-8e2b-c2116a60aee9.png)
+![image](https://user-images.githubusercontent.com/57364511/183299794-1a768867-5bc9-4957-b1a0-9a59b11ba919.png)
+
+***Spectrogram***: Accuracy: ~57%
+
+![image](https://user-images.githubusercontent.com/57364511/183299922-c9e92add-b1ba-4861-91e7-fba866367265.png)
+![image](https://user-images.githubusercontent.com/57364511/183299931-32ec6464-41c6-4360-9ad2-99f885a952bd.png)
+
+***Mel Spectrogram***: Accuracy: ~59%
+
+![image](https://user-images.githubusercontent.com/57364511/183299945-6971c418-98e1-4989-8335-e0a78c54dcb8.png)
+![image](https://user-images.githubusercontent.com/57364511/183299953-391e2e7f-564a-4d2d-8215-a0be83e96ded.png)
+
+***MFCC***: Accuracy: ~45%
+
+![image](https://user-images.githubusercontent.com/57364511/183299959-4e7929e3-007f-462e-9bd2-76317e418871.png)
+![image](https://user-images.githubusercontent.com/57364511/183299967-05fd66b0-adcb-49dd-b70c-df574cdb38a4.png)
+
 **Model Selection**
+
+# Future Work
 
 # References
 
