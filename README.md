@@ -187,9 +187,11 @@ The loss & accuracy plot of ***batch size = 32 & learning rate = 0.001***: Accur
 
 # Future Work
 
-(1.) Do feature engineering and data augmentation for the GTZAN dataset to better train the model.
+(1.) Fix the bug that cannot load the audio file with mp3 format.
 
-(2.) Develop the Confusion Matrix to do a deeper analysis of different models.
+(2.) Do feature engineering and data augmentation for the GTZAN dataset to better train the model.
+
+(3.) Develop the Confusion Matrix to do a deeper analysis of different models.
 
 # References
 
