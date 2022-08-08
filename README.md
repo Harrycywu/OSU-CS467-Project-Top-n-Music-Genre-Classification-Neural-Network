@@ -116,9 +116,9 @@ $ git clone https://github.com/Harrycywu/OSU-CS467-Project-Top-n-Music-Genre-Cla
 
 **(4.) Train the model using the following command:**
 ```
-$ python train.py --lr= --batch_size= --feature_type=mel_spectrogram --save_model
+$ python train.py --feature_type=mel_spectrogram --save_model
 ```
-Note: This model has about xx% accuracy on the testing data.
+Note: This model has about **62.67%** accuracy on the testing data.
 
 **(5.) Run the GUI program:**
 
@@ -128,7 +128,7 @@ $ python GUI.py
 ```
 
 Then, follow the instructions on the GUI:
-![image](https://user-images.githubusercontent.com/57364511/182654387-d7eeff9a-4d51-40bb-9947-65e04bd5ba00.png)
+![image](https://user-images.githubusercontent.com/57364511/183475749-b19258bf-28ea-4cf6-a95b-fccca63f8e73.png)
 
 ## How does the Program Work?
 
@@ -142,7 +142,7 @@ The program will first process the inputted audio file into the image file (e.g.
 
 First, we use Librosa and OpenCV to process the audio files. Second, we use PyTorch to build a framework that can train CNN models (used to predict a top-n list of inputted audio's most likely music genre) by using different settings, such as different batch sizes & learning rates. Here, we use Cross Entropy Loss since we are doing a classification task. Meanwhile, we use tqdm to keep track of the running progress of each part of the program (e.g., loading data & training progress).
 
-Using our developed framework, we can train CNN models with an accuracy of around 60~70% using the preprocessed GTZAN dataset. After getting the pre-trained model, our application allows users to select an audio file and receive a plot, created by matplotlib, showing a top-n list of this audio's most likely music genre predicted by the pre-trained CNN model.
+Using our developed framework, we can train CNN models with the best accuracy of around 60~70% using the preprocessed GTZAN dataset. After getting the pre-trained model, our application allows users to select an audio file and receive a plot, created by matplotlib, showing a top-n list of this audio's most likely music genre predicted by the pre-trained CNN model.
 
 **Model Architecture**
 
@@ -178,7 +178,39 @@ The following are the loss & accuracy plots:
 
 **Model Selection**
 
+Due to time insufficiency, we only ran the designed CNN model (feature = Mel Spectrogram) with different batch sizes & learning rates by running the **run.sh**. And we find that using **batch size = 32** & **learning rate = 0.001** outperforms other settings. Therefore, we finally chose to train the model using Mel Spectrogram as features, batch size = 32, and learning rate = 0.001, and used this pre-trained model for our application.
+
+The loss & accuracy plot of ***batch size = 32 & learning rate = 0.001***: Accuracy: ~62.67%
+
+![image](https://user-images.githubusercontent.com/57364511/183482699-b737513e-ba82-4fca-a89a-68b69203737c.png)
+![image](https://user-images.githubusercontent.com/57364511/183482567-faa54528-a073-4bec-a857-cd58734afe4a.png)
+
 # Future Work
+
+(1.) Do feature engineering and data augmentation for the GTZAN dataset to better train the model.
+
+(2.) Develop the Confusion Matrix to do a deeper analysis of different models.
 
 # References
 
+**Paper & Journal**
+
+(1.) G. Tzanetakis and P. Cook, "Musical genre classification of audio signals," ***IEEE Transactions on speech and audio processing***, vol. 10, no. 5, pp. 293-302, 2002.
+
+(2.) Hareesh Bahuleyan, "Music genre classification using machine learning techniques", 2018.
+
+(3.) Y.-H. Cheng, P.-C. Chang and C.-N. Kuo, "Convolutional Neural Networks Approach for Music Genre Classification", ***2020 International Symposium on Computer Consumer and Control (IS3C)***, pp. 399-403, 2020.
+
+**Article**
+
+(1.) Parul Pandey, "Music Genre Classification with Python", https://towardsdatascience.com/music-genre-classification-with-python-c714d032f0d8
+
+(2.) Sawan Rai, "Music Genres Classification using Deep learning techniques", https://www.analyticsvidhya.com/blog/2021/06/music-genres-classification-using-deep-learning-techniques/
+
+**GitHub Repo**
+
+(1.) sawan16, "Genre-Classification-using-Deep-learning", https://github.com/sawan16/Genre-Classification-using-Deep-learning
+
+(2.) CNN-MNIST Example, https://hackmd.io/@lido2370/SJMPbNnKN?type=view
+
+(3.) HareeshBahuleyan, "music-genre-classification", https://github.com/HareeshBahuleyan/music-genre-classification
