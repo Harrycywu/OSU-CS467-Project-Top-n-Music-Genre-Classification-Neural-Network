@@ -46,15 +46,17 @@ def go():
         tkMessageBox.showerror(title="Error", message="You have not chosen the audio file. Please select!")
         return
 
-    # Data Preprocessing -> MFCCs -> Spectrogram Image
+    # Data Preprocessing -> Mel Spectrogram -> Spectrogram Image
     x, _sr = librosa.load(file_path, sr=22050)
-    x_mfcc = librosa.feature.mfcc(y=x, sr=_sr, n_fft=2048, hop_length=512)
-    librosa.display.specshow(x_mfcc, sr=_sr)
-    plt.savefig("Images/mfcc_spec.png")
+    x_mel = librosa.feature.melspectrogram(y=x, sr=_sr, n_fft=2048, hop_length=512)
+    # Convert to dB-scaled
+    x_mel = librosa.power_to_db(x_mel)
+    librosa.display.specshow(x_mel, sr=_sr)
+    plt.savefig("Images/mel_spec.png")
     plt.close()
 
     # Read the image & Process as a tensor
-    image = cv2.imread("Images/mfcc_spec.png")[...,::-1]
+    image = cv2.imread("Images/mel_spec.png")[...,::-1]
     # Resize the image -> (256, 256, 3)
     resized_image = cv2.resize(image, (256, 256))
     # Change to tensor
