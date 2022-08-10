@@ -10,6 +10,10 @@
 
 We developed a program that allows users to enter a song clip and receive a top-n list of this audio's most likely music genre sorted by probability in descending order. The prediction is made by the pre-trained Convolutional Neural Network (CNN) model designed by our project team.
 
+**Project Demo Video:** https://youtu.be/rLUI020J03o
+
+**How to Run our Project:** Refer to **Instructions Document.pdf**.
+
 # Environment Setup
 
 We use PyTorch to develop our CNN model:
@@ -25,6 +29,8 @@ Other software libraries:
 * opencv (cv2)
 * tkinter
 * tqdm
+
+Note: Refer to **Installation Document.pdf** for more information.
 
 # Program File Structure
 
